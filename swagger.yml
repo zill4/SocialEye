@@ -1,0 +1,513 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger ReST Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /brand:
+    get:
+      operationId: brand.read_all
+      tags:
+        - Brand
+      summary: Read the entire list of bdands
+      description: Read the list of brands
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of brand to get from brands
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering brands
+          required: false
+      responses:
+        200:
+          description: Successfully read brands list operation
+          schema:
+            type: array
+            items:
+              properties:
+                bname:
+                  type: string
+                timestamp:
+                  type: string
+    
+    post:
+      operationId: brand.create
+      tags:
+        - brand
+      summary: Create a brand and add it to the brand list
+      description: Create a new brand in the brand list
+      parameters:
+        - name: brand
+          in: body
+          description: Brand to create
+          required: True
+          schema:
+            type: object
+            properties:
+              bname:
+                type: string
+                description: Brand name of the brand to be created.
+      responses:
+        201:
+          description: Successfully created brand in list.
+
+  /brand/{bname}:
+    get:
+      operationId: brand.read_one
+      tags:
+        - brand
+      summary: Read on brand from the brand list
+      description: Read one brand from the brand list
+      parameters:
+        - name: bname
+          in: path
+          description: Brand name of the brand to get from list!
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read brand from brand list operation.
+          schema:
+            properties:
+              bname:
+                type: string
+              timestamp:
+                type: string
+    
+    put:
+      operationId: brand.update
+      tags:
+        - brand
+      summary: Update a brand in the brand list.
+      description: Update a brand in teh brand list.
+      parameters:
+        - name: bname
+          in: path
+          description: Brand name of the brand to update in the list
+          type: string
+          required: True
+        - name: brand
+          in: body
+          schema:
+            type: object
+            properties:
+              bname:
+                type: string
+      responses:
+        200:
+          description: Successfully updated brand in brand list.
+
+    delete:
+      operationId: brand.delete
+      tags:
+        - brand
+      summary: Delete a brand from the brand list.
+      description: Delete a brand.
+      parameters:
+        - name: bname
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a brand fom brand list.
+
+  /brand/{asin}:
+    post:
+      operationId: brand.get_by_asin
+      tags:
+        - brand
+      summary: Get brand name by asin.
+      description: Get brand by asin from RapidAPI PPA.
+      parameters:
+        - name: asin
+          in: path
+          description: amazon id of product to search brand.
+          type: string
+          required: True
+        - name: brand
+          in: body
+          schema:
+            type: object
+            properties:
+              asin:
+                type: string
+                description: amazon id of product.
+      responses:
+        200:
+          description: Successfully retrieved brand from get_brand operation.
+          schema:
+            properties:
+              bname:
+                type: string
+              timestamp:
+                type: string
+
+  /people:
+    get:
+      operationId: people.read_all
+      tags:
+        - People
+      summary: Read the entire list of people
+      description: Read the list of people
+      parameters:
+        - name: length
+          in: query
+          type: integer
+          description: Number of people to get from people
+          required: false
+        - name: offset
+          in: query
+          type: integer
+          description: Offset from beginning of list where to start gathering people
+          required: false
+      responses:
+        200:
+          description: Successfully read people list operation
+          schema:
+            type: array
+            items:
+              properties:
+                fname:
+                  type: string
+                lname:
+                  type: string
+                timestamp:
+                  type: string
+
+    post:
+      operationId: people.create
+      tags:
+        - people
+      summary: Create a person and add it to the people list
+      description: Create a new person in the people list
+      parameters:
+        - name: person
+          in: body
+          description: Person to create
+          required: True
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+                description: First name of person to create
+              lname:
+                type: string
+                description: Last name of person to create
+      responses:
+        201:
+          description: Successfully created person in list
+
+  /people/{lname}:
+    get:
+      operationId: people.read_one
+      tags:
+        - people
+      summary: Read one person from the people list
+      description: Read one person from the people list
+      parameters:
+        - name: lname
+          in: path
+          description: Last name of the person to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read person from people list operation
+          schema:
+            properties:
+              fname:
+                type: string
+              lname:
+                type: string
+              timestamp:
+                type: string
+
+    put:
+      operationId: people.update
+      tags:
+        - people
+      summary: Update a person in the people list
+      description: Update a person in the people list
+      parameters:
+        - name: lname
+          in: path
+          description: Last name of the person to update in the list
+          type: string
+          required: True
+        - name: person
+          in: body
+          schema:
+            type: object
+            properties:
+              fname:
+                type: string
+              lname:
+                type: string
+      responses:
+        200:
+          description: Successfully updated person in people list
+
+    delete:
+      operationId: people.delete
+      tags:
+        - people
+      summary: Delete a person from the people list
+      description: Delete a person
+      parameters:
+        - name: lname
+          in: path
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a person from people list
+  /g_comp:
+      get:
+        operationId: g_comp.read_all
+        tags:
+          - G_comp
+        summary: Read the entire list of good companies
+        description: Read the list of good companies
+        parameters:
+          - name: length
+            in: query
+            type: integer
+            description: Number of brands to get from good companies
+            required: false
+          - name: offset
+            in: query
+            type: integer
+            description: Offset from beginning of list where to start gathering brands
+            required: false
+        responses:
+          200:
+            description: Successfully read brands list operation
+            schema:
+              type: array
+              items:
+                properties:
+                  bname:
+                    type: string
+                  url:
+                    type: string
+                  timestamp:
+                    type: string
+      
+      post:
+        operationId: g_comp.create
+        tags:
+          - g_comp
+        summary: Create a good company and add it to the good company list
+        description: Create a new brand in the brand list
+        parameters:
+          - name: g_comp
+            in: body
+            description: Good company to create
+            required: True
+            schema:
+              type: object
+              properties:
+                bname:
+                  type: string
+                  description: Good company name.
+                url:
+                  type: string
+        responses:
+          201:
+            description: Successfully created good company in list.
+  /g_comp/{bname}:
+      get:
+        operationId: g_comp.read_one
+        tags:
+          - g_comp
+        summary: Read one company from the good company list
+        description: Read one company from the company list
+        parameters:
+          - name: bname
+            in: path
+            description: Name of the company to get from the list
+            type: string
+            required: True
+        responses:
+          200:
+            description: Successfully read company from list operation
+            schema:
+              properties:
+                bname:
+                  type: string
+                url:
+                  type: string
+                timestamp:
+                  type: string
+
+      put:
+        operationId: g_comp.update
+        tags:
+          - g_comp
+        summary: Update a company in the company list
+        description: Update a company in the company list
+        parameters:
+          - name: bname
+            in: path
+            description: name of the company to update in the list
+            type: string
+            required: True
+          - name: g_comp
+            in: body
+            schema:
+              type: object
+              properties:
+                bname:
+                  type: string
+                url:
+                  type: string
+        responses:
+          200:
+            description: Successfully updated company in good company list
+
+      delete:
+        operationId: g_comp.delete
+        tags:
+          - g_comp
+        summary: Delete a comapny from the good company list
+        description: Delete a company
+        parameters:
+          - name: bname
+            in: path
+            type: string
+            required: True
+        responses:
+          200:
+            description: Successfully deleted a company from good company list
+  /b_corp:
+      get:
+        operationId: b_corp.read_all
+        tags:
+          - B_corp
+        summary: Read the entire list of b_corp companies
+        description: Read the list of b_corp companies
+        parameters:
+          - name: length
+            in: query
+            type: integer
+            description: Number of brands to get from b_corp companies
+            required: false
+          - name: offset
+            in: query
+            type: integer
+            description: Offset from beginning of list where to start gathering brands
+            required: false
+        responses:
+          200:
+            description: Successfully read brands list operation
+            schema:
+              type: array
+              items:
+                properties:
+                  bname:
+                    type: string
+                  url:
+                    type: string
+                  timestamp:
+                    type: string
+      
+      post:
+        operationId: b_corp.create
+        tags:
+          - b_corp
+        summary: Create a b_corp company and add it to the b_corp company list
+        description: Create a new brand in the brand list
+        parameters:
+          - name: b_corp
+            in: body
+            description: b_corp company to create
+            required: True
+            schema:
+              type: object
+              properties:
+                bname:
+                  type: string
+                  description: b_corp company name.
+                url:
+                  type: string
+        responses:
+          201:
+            description: Successfully created b_corp company in list.
+  /b_corp/{bname}:
+      get:
+        operationId: b_corp.read_one
+        tags:
+          - b_corp
+        summary: Read one company from the b_corp company list
+        description: Read one company from the company list
+        parameters:
+          - name: bname
+            in: path
+            description: Name of the company to get from the list
+            type: string
+            required: True
+        responses:
+          200:
+            description: Successfully read company from list operation
+            schema:
+              properties:
+                bname:
+                  type: string
+                url:
+                  type: string
+                timestamp:
+                  type: string
+
+      put:
+        operationId: b_corp.update
+        tags:
+          - b_corp
+        summary: Update a company in the company list
+        description: Update a company in the company list
+        parameters:
+          - name: bname
+            in: path
+            description: name of the company to update in the list
+            type: string
+            required: True
+          - name: b_corp
+            in: body
+            schema:
+              type: object
+              properties:
+                bname:
+                  type: string
+                url:
+                  type: string
+        responses:
+          200:
+            description: Successfully updated company in b_corp company list
+
+      delete:
+        operationId: b_corp.delete
+        tags:
+          - b_corp
+        summary: Delete a comapny from the b_corp company list
+        description: Delete a company
+        parameters:
+          - name: bname
+            in: path
+            type: string
+            required: True
+        responses:
+          200:
+            description: Successfully deleted a company from b_corp company list
